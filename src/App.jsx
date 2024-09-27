@@ -1,79 +1,35 @@
-import { useState,useReducer } from "react";
-import AddTask from "./AddTask.jsx";
-import TaskList from "./TaskList.jsx";
-import FormComponent from './FormComponent';
+import { useState } from 'react'
+import reactLogo from './assets/react.svg'
+import viteLogo from '/vite.svg'
+import './App.css'
 
-export default function TaskApp() {
-  const [tasks, setTasks] = useState(initialTasks);
-
-  function handleAddTask(text) {
-    dispatch({
-      type: 'added',
-      id: nextId++,
-      text: text,
-    });
-  }
-  
-  function handleChangeTask(task) {
-    dispatch({
-      type: 'changed',
-      task: task,
-    });
-  }
-  
-  function handleDeleteTask(taskId) {
-    dispatch({
-      type: 'deleted',
-      id: taskId,
-    });
-  }
-
-  function tasksReducer(tasks, action) {
-    switch (action.type) {
-      case 'added': {
-        return [
-          ...tasks,
-          {
-            id: action.id,
-            text: action.text,
-            done: false,
-          },
-        ];
-      }
-      case 'changed': {
-        return tasks.map((t) => {
-          if (t.id === action.task.id) {
-            return action.task;
-          } else {
-            return t;
-          }
-        });
-      }
-      case 'deleted': {
-        return tasks.filter((t) => t.id !== action.id);
-      }
-      default: {
-        throw Error('Unknown action: ' + action.type);
-      }
-    }
-  }
+function App() {
+  const [count, setCount] = useState(0)
 
   return (
     <>
-      <h1>Prague itinerary</h1>
-      <AddTask onAddTask={handleAddTask} />
-      <TaskList
-        tasks={tasks}
-        onChangeTask={handleChangeTask}
-        onDeleteTask={handleDeleteTask}
-      />
+      <div>
+        <a href="https://vitejs.dev" target="_blank">
+          <img src={viteLogo} className="logo" alt="Vite logo" />
+        </a>
+        <a href="https://react.dev" target="_blank">
+          <img src={reactLogo} className="logo react" alt="React logo" />
+        </a>
+      </div>
+      <h1>Vite + React</h1>
+      <div className="card">
+        <button onClick={() => setCount((count) => count + 1)}>
+          count is {count}
+        </button>
+        <p>
+          Edit <code>src/App.jsx</code> and save to test HMR
+        </p>
+      </div>
+      <p className="read-the-docs">
+        Click on the Vite and React logos to learn more
+      </p>
     </>
-  );
+  )
 }
 
-let nextId = 3;
-const initialTasks = [
-  { id: 0, text: "Visit Kafka Museum", done: true },
-  { id: 1, text: "Watch a puppet show", done: false },
-  { id: 2, text: "Lennon Wall pic", done: false },
-];
+export default App
